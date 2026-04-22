@@ -1,1 +1,1 @@
-from .mlp import MLP
+from models.transolver_corrector import TransolverCorrector
