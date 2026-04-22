@@ -42,10 +42,13 @@ class TransolverCorrector(nn.Module):
 
         path = hf_hub_download(
             repo_id="MoosChance/TranssolverGram",
-            filename="state_dict.pt",
+            filename="state_dict_weights_only.pt",
         )
-        checkpoint = torch.load(path, map_location="cpu", weights_only=False)
-        sd = checkpoint["model_state_dict"]
+        checkpoint = torch.load(path, map_location="cpu", weights_only=True)
+        if "model_state_dict" in checkpoint:
+            sd = checkpoint["model_state_dict"]
+        else:
+            sd = checkpoint
         clean = OrderedDict()
         for k, v in sd.items():
             clean[k.removeprefix("module.")] = v
